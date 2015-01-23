@@ -12,6 +12,22 @@ chroms <-
              row.names=1,
              col.names=names(colClasses))
 
+proc <- fread("proc_NB1388T_D.txt")
+         
+proc.stats <- proc %>%
+  group_by(Chr) %>%
+  summarise(size=max(PosSNPend))
+qplot(Chr, size, data=proc.stats)
+## I guess chr.5 means the second half of chr, after the centromere.
+
+proc.some <- proc %>%
+  mutate(LOH=ifelse(Mallele == Copy, 1, 0),
+         chr.int=as.integer(floor(Chr)),
+         chrom=sprintf("chr%d", chr.int)) %>%
+  filter(chr.int <= 22)
+proc.some %>%
+  select(chrom, PosSNPstart, PosSNPend, Copy, LOH)
+
 colClasses <-
   c("snp"="NULL",
     "chr"="factor",
