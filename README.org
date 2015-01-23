@@ -1,0 +1,3 @@
+Collaborations on copy number analysis
+
+- some code to convert Curie format data files to SegAnnDB bedGraph format.
